@@ -34,9 +34,14 @@ haicc host crud/read swarms --flags log=verbose
   goes with each command sent on from there; one written after the last
   command's URI is that command's.
 - **A flag that is none**, or a value its flag does not take: ignored,
-  with a warning in the request's log.
-- The flags there are: `log`, below, `layer`, and `continuation`
-  ("A continuation", further down).
+  with a warning in the request's log. The rule (the human): "wrong flag
+  or issues with underlying functionality don't throw errors but
+  warnings": a flag whose target is not there is a warning too, nothing
+  thrown.
+- The flags there are: `log`, below, `layer`, `continuation` ("A
+  continuation", further down), and `container`, a routing directive:
+  `boot/deploy`'s child deployed into a container, on the container's
+  own haicc install (`mrepo-base-boot`'s `deploy`).
 
 ### The layer
 
@@ -111,7 +116,7 @@ A command may answer, beside its output, with a script to go on with:
   behind the one the command was sent on at.
 - **Who answers with one**: an action, when it has something to go on
   with. `boot/deploy` does when asked, by a flag, for a script of the
-  package it deploys: `haicc . boot/deploy host base-component-haicc
+  package it deploys: `haicc . boot/deploy host haiccing/base-component-haicc
   --flags continuation=start`.
 
 ## Commands sent on

@@ -7,6 +7,11 @@ goes there. `mrepo/` is the run time: the mrepo, each layer a page. Every
 package of the base family follows it; the template a base package is
 brought to.
 
+Every organisation's packages follow it: haiccing's, and each
+platform's (`myctral`, `myctrans`, `splectral`; `base-docs-haicc`,
+"Platforms"). A platform's package template is very similar to this
+one; what differs is the input source, the platform's own organisation.
+
 ## Links
 
 - [mrepo](mrepo/)
@@ -31,7 +36,7 @@ is for.
 | `protocol.js` | provides protocols: their configs and actions; linked into an mrepo, its protocols are loaded by the runtime; they are offered to the outside once activated |
 | `modules/`, `package.json` | carries its own dependencies |
 | `mrepo/` | comes with an mrepo, by layers |
-| `scripts/` | has scripts: lists of commands to go on with after it is deployed, a file each (`<name>.json`), answered as the deploy's continuation when asked for by name |
+| `scripts/` | has scripts: lists of commands to go on with after it is deployed, a file each (`<name>.haicc`, a simple command a line), answered as the deploy's continuation when asked for by name, sent on by the terminal as `haicc/script` |
 | `howto/` | has how-tos: what can be done with it, a folder each (`<name>/`), its README the how-to: what it does and its steps as typed commands, each with why; a pattern's how-to names it, `Pattern: <name>`; pages of the package, read with `info` |
 | `test/` | has tests and test sets |
 | `test-reports/` | holds the proof that its tests passed: the report of its last pre-release |
@@ -120,6 +125,8 @@ with `info/get` by its keywords. Its shape:
    pages: each a choice.
 9. **Every page is reached** by a menu from the top; a link leads to a
    README; a README without a menu is the old form.
+10. **No link to a report file**: what is tested must not depend on a
+    report (a package's content hash leaves its reports out).
 
 The generic `info` test checks them in every package
 (`mrepo-base-info`).
@@ -205,6 +212,11 @@ line or right above it: `// log: ...`, `// catch: ...`, `// console: ...`,
 
 `modules`: our modules the unit starts from; what they use is worked out
 from them ("Modules", above).
+
+`platform`: a platform's package only, the organisation of its
+components (`"platform": "splectral"`; `base-docs-haicc`, "Platforms").
+A list of that organisation is the platform's component, the pattern
+`<org>-component`.
 
 `template`: the commit of this template the package was brought to ("From
 the template", below).
