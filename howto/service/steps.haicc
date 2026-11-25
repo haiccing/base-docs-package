@@ -1,0 +1,6 @@
+# step: deployed: its commission done before the deploy answers
+. boot/deploy host haiccing/base-component-haicc
+# expect: "deployed":"host"
+# step: the check: started, its door open (initialise again: nothing to do)
+host service/initialise
+# expect: "state":"started","again":true

@@ -11,7 +11,9 @@ at that position, one after the other. Nothing runs a script with a
 deploy: what a package does once deployed is its `commission` hook (the
 how-to `commission`).
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # the script: commands for where it will be run, from that place
@@ -22,9 +24,11 @@ boot/deploy swarms/swarm-1/node-1 haiccing/base-component-haicc
 END
 # its README: scripts/, each script with what it does
 $EDITOR haiccing/<pkg>/scripts/README.md
-# the check: run at a deployed mrepo, every line done
-haicc . haicc/script <name> < haiccing/<pkg>/scripts/cluster.haicc
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

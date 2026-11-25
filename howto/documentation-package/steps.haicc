@@ -1,0 +1,6 @@
+# step: a documentation package, in the docs mrepo: its pages at its keyword
+. boot/deploy docs haiccing/base-component-docs
+# expect: "deployed":"docs"
+docs info/get haiccing/base-docs-uri
+# expect: "keyword":"haiccing/base-docs-uri"
+# expect: "title":"base-docs-uri"

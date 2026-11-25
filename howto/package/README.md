@@ -11,6 +11,8 @@ most recent pin and a current report.
 
 ## Steps
 
+**In development**: these steps act on the packages where they are built, not inside an install: an `sh` procedure, no `steps.haicc`; their check is the pre-release.
+
 ```sh
 # the candidate copied, its report not: the new package has none yet
 cp -a <org>/<candidate> <org>/<new>

@@ -11,7 +11,9 @@ list. It starts `booted`; `service/initialise`, `start`, `stop`,
 is its `initialise` hook; what sits behind its door is activated at
 `start`. Its `commission` brings it into service after its deploy.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # its state as it starts
@@ -22,11 +24,11 @@ $EDITOR haiccing/<pkg>/mrepo/packages/.layer.json
 $EDITOR haiccing/<pkg>/mrepo/runtime/hooks/initialise.haicc
 # brought into service by its commission, after its deploy
 printf 'service/initialise\nservice/start\n' > haiccing/<pkg>/mrepo/runtime/hooks/commission.haicc
-# deployed: its commission done before the deploy answers
-haicc . boot/deploy <name> <pkg>
-# the check: started, its door open (initialise again: not now)
-haicc <name> service/initialise
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

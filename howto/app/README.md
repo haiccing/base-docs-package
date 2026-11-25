@@ -10,6 +10,8 @@ in an mrepo: the `haicc` command is one.
 
 ## Steps
 
+**In development**: these steps act on the packages where they are built, not inside an install: an `sh` procedure, no `steps.haicc`; their check is the pre-release.
+
 ```sh
 # cloned from the app (the package how-to)
 cp -a haiccing/base-app-haicc haiccing/<new>

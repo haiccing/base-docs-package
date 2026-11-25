@@ -20,7 +20,9 @@ component's own list laid on top. Splectral is the first.
   commands that manage it; a second pair on the platform's side for the
   platform's own exchange.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # the platform's list: the boot protocol in it (and haicc, commands sent
@@ -31,12 +33,11 @@ $EDITOR haiccing/<platform>/mrepo/packages/.layer.json
 #   haicc <position> runtime/lay . <side>/packages/<component>
 # sent through its own inbox (haicc/script's way), the request waiting
 $EDITOR pear-full-square/<module>/external/install/index.js
-# a component, both halves
-haicc <platform> boot/deploy <position> base-package-service
-haicc <platform> <platform>/install <position> <org>/<component>
-haicc <platform>/<position> service/initialise
-haicc <platform>/<position> service/start
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

@@ -14,7 +14,9 @@ deploys its components first, each commissioned by its own (the
 cascade), then brings itself into service; its decommission tears them
 down.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # what its mrepo does once deployed: its components, then its service
@@ -30,11 +32,11 @@ boot/teardown docs
 END
 # its configured test names both, line by line, and walks them
 $EDITOR haiccing/<pkg>/test/configured/configured.test.js
-# the check: deployed, its commission done before the deploy answers
-haicc . boot/deploy <name> <pkg>
-# torn down: its decommission first
-haicc . boot/teardown <name>
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

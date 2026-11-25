@@ -1,0 +1,12 @@
+# step: deployed, its commission done before the deploy answers: the workbench's, its components deployed, then itself in service
+. boot/deploy workbench haiccing/base-solution-workbench
+# expect: "deployed":"workbench"
+workbench crud/read "*"
+# expect: "uri":["main","docs"]
+workbench service/start
+# expect: "state":"started","again":true
+# step: torn down: its decommission first, its components with it
+. boot/teardown workbench
+# expect: "tornDown":"workbench"
+. haicc/mrepos local/docs
+# expect: []

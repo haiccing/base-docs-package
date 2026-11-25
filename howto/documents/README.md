@@ -12,7 +12,9 @@ Their pages are split on package, each below its organisation, in its
 own context. What is installed is what is documented: the docs mrepo,
 the install's manual.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # the list: what the mrepo is made of, and what it documents beyond it
@@ -22,13 +24,11 @@ $EDITOR haiccing/<pkg>/mrepo/runtime/hooks/initialise.haicc   # info/extract
 $EDITOR haiccing/<pkg>/mrepo/runtime/hooks/shutdown.haicc     # info/clear
 # its README: what it documents, beside its included packages
 $EDITOR haiccing/<pkg>/README.md
-# deployed, initialised: the store's packages documented
-haicc . boot/deploy <name> <pkg>
-# their pages in their contexts: an organisation, a package, a keyword
-haicc <name> info/get <org>
-haicc <name> info/get <org>/<package>/<keyword>
-haicc <name> info/get <keyword>
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

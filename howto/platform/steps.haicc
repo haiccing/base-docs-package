@@ -1,0 +1,16 @@
+# scene: the platform, Splectral, in service
+. boot/deploy splectral haiccing/base-package-splectral
+# step: a component, its first half: a plain service-managed mrepo, deployed by the platform
+splectral boot/deploy help haiccing/base-package-service
+# expect: "mrepo":"local/help"
+# step: its second half: the component's packages laid on top
+splectral splectral/install help splectral/base-component-help-viewer
+# expect: "installed":"help"
+# step: in service, through the platform
+splectral/help service/initialise
+# expect: "state":"initialised"
+splectral/help service/start
+# expect: "state":"started"
+# step: torn down through the platform, as any mrepo (Splectral reads no links of its own: its components are its to tear down)
+splectral boot/teardown help
+# expect: "tornDown":"help"

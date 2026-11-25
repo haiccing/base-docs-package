@@ -1,0 +1,14 @@
+# scene: Splectral in service, a component deployed in it: a placed package with a program
+. boot/deploy splectral haiccing/base-package-splectral
+splectral boot/deploy help haiccing/base-package-service
+splectral splectral/install help splectral/base-component-help-viewer
+splectral/help service/initialise
+# step: started by its hook: start.haicc runs runtime/start, the program beside the mrepo
+splectral/help service/start
+# expect: "state":"started"
+# step: ended by its hook: stop.haicc runs runtime/stop
+splectral/help service/stop
+# expect: "state":"initialised"
+# step: torn down through the platform, as any mrepo (Splectral reads no links of its own: its components are its to tear down)
+splectral boot/teardown help
+# expect: "tornDown":"help"

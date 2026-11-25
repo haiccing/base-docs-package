@@ -1,0 +1,17 @@
+# step: deployed: its boot hooks run as its runtime starts, what it offers always active; its commission brings it into service, its start hook opening its door
+. boot/deploy host haiccing/base-component-haicc
+# expect: "deployed":"host"
+host info/get
+# expect: "keyword":"."
+host crud/read .
+# expect: "uri":["main","."]
+# step: its door closed: its stop hook deactivates what is behind it
+host service/stop
+# expect: "state":"initialised"
+host crud/read .
+# expect: error: not now: crud read (crud is not active; the service is initialised)
+# step: opened again: its start hook
+host service/start
+# expect: "state":"started"
+host crud/read .
+# expect: "uri":["main","."]

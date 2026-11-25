@@ -1,0 +1,6 @@
+# scene: the host, in service
+. boot/deploy host haiccing/base-component-haicc
+# step: a script run at a deployed mrepo, every line done: its lines as one argument (here one)
+. haicc/script host 'crud/create swarms/swarm-1 {}'
+# expect: "line":"crud/create swarms/swarm-1 {}"
+# expect: "outcome":"created"

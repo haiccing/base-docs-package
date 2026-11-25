@@ -11,6 +11,8 @@ holds the code: each action a folder `external/<action>/`, its
 
 ## Steps
 
+**In development**: these steps act on the packages where they are built, not inside an install: an `sh` procedure, no `steps.haicc`; their check is the pre-release.
+
 ```sh
 # a module for the code, its actions a folder each, beside the others
 mkdir -p pear-full-square/<module>/external/<action>

@@ -10,6 +10,8 @@ the repository code, or the boot refuses it: `not a layer`.
 
 ## Steps
 
+**In development**: these steps act on the packages where they are built, not inside an install: an `sh` procedure, no `steps.haicc`; their check is the pre-release.
+
 ```sh
 # the leaf: its mode, atomic for data written one commit at a time
 mkdir -p haiccing/<pkg>/mrepo/<layer>

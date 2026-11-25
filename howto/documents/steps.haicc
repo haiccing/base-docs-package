@@ -1,0 +1,10 @@
+# step: deployed, initialised: the store's packages documented
+. boot/deploy docs haiccing/base-component-docs
+# expect: "deployed":"docs"
+# step: their pages in their contexts: an organisation, a package, a keyword
+docs info/get haiccing
+# expect: "keyword":"haiccing"
+docs info/get haiccing/base-package-crud/read
+# expect: "context":"haiccing/base-package-crud"
+docs info/get read
+# expect: "keyword":"haiccing/base-package-crud/read"

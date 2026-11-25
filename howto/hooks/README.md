@@ -13,7 +13,9 @@ runtime as it starts, before anything else is taken from the inbox;
 waiting for its lines. Laid in from the package that defines the mrepo
 only.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # what the mrepo offers always: opened as it starts
@@ -31,6 +33,10 @@ printf 'protocol/deactivate . boot\n' > haiccing/<pkg>/mrepo/runtime/hooks/stop.
 # the check: its own test walks every line it brings, and fails on one left out
 SOURCES=$PWD/sources tools/bare haiccing/<pkg>/test/configured/run.js
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

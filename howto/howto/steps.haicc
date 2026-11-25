@@ -1,0 +1,11 @@
+# scene: a how-to's boot: the runner, every package's how-tos documented in it
+. boot/deploy runner haiccing/base-package-howto
+# expect: "deployed":"runner"
+# step: a how-to run through where it is installed: its scene, its steps, every check
+runner howto/run . haiccing/base-package-crud/structure
+# expect: "howto":"haiccing/base-package-crud/structure","passed":true
+# step: its page, the script in it, read with info
+runner info/get haiccing/base-package-crud/howto/structure
+# expect: "keyword":"haiccing/base-package-crud/howto/structure"
+# expect: ```haicc
+# expect: # step: a node and its parent

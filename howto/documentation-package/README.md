@@ -9,7 +9,9 @@ are pages. It documents what does not depend on one implementation, for
 its family (`base-docs-*`), and is read from the docs mrepo. A package
 or a module documents only what is its own.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # cloned from a documentation package (the package how-to)
@@ -23,6 +25,10 @@ $EDITOR haiccing/base-component-docs/mrepo/packages/.layer.json haiccing/base-co
 # the check: its pre-release, its info test reaching every page
 tools/bare tools/package-test.js haiccing/<new>
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

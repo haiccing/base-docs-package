@@ -9,7 +9,9 @@ packages its mrepo is made of, itself last, and the runtime config of
 that mrepo. Its README lists the same packages under `## Included
 packages`, siblings, in deploy order.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # cloned from a component (the package how-to)
@@ -22,9 +24,11 @@ $EDITOR haiccing/<new>/README.md
 ls haiccing/<new>/mrepo/runtime/hooks
 # its own test, configured: the list, the hooks, against the packages in the sources
 SOURCES=$PWD/sources tools/bare haiccing/<new>/test/configured/run.js
-# the check: deployed, its info read
-haicc . boot/deploy <name> <new>
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

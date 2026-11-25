@@ -38,7 +38,7 @@ is for.
 | `mrepo/` | comes with an mrepo, by layers |
 | `scripts/` | has scripts: lists of commands, a file each (`<name>.haicc`, a simple command a line), run by name where the `haicc` command points (`haicc/file`); a deploy places them in the work folder, `<work>/scripts/<org>/<package>/`, and runs none: what an mrepo does once deployed is its `commission` hook (`mrepo/runtime/hooks/`) |
 | `schemas/` | carries schemas: AVRO, a file each (`<name>.json`), named by its URI, `<org>/<package>/<name>`, its AVRO fullname by the data-name mapping (`base-docs-uri`, "Schemas"); sealed in its bundle, registered in the install's registry when it is deployed ("Schemas") |
-| `howto/` | has how-tos: what can be done with it, a folder each (`<name>/`), its README the how-to: what it does and its steps as typed commands, each with why; a pattern's how-to names it, `Pattern: <name>`; pages of the package, read with `info` |
+| `howto/` | has how-tos: what can be done with it, a folder each (`<name>/`): its README the how-to, what it does and why, and its script, `steps.haicc`, its steps as typed after `haicc` with what each answers (`# expect:`), run where it is installed (`howto/run`), shown in the page's `## Steps` at info extraction; one at the machine or in development an `sh` procedure instead, its page saying so; a pattern's how-to names it, `Pattern: <name>` (the how-to `howto`); pages of the package, read with `info` |
 | `test/` | has tests and test sets |
 | `test-reports/` | holds the proof that its tests passed: the report of its last pre-release |
 | `<name>/` | holds a further unit, by its URI part name |

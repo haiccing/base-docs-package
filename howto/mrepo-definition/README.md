@@ -10,7 +10,9 @@ runtime config (the hooks, the service state) is laid in from it, the
 last of the list, only. A component does so; a protocol package can, to
 be deployed on its own.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # the list: the packages in deploy order, itself last
@@ -19,9 +21,11 @@ $EDITOR haiccing/<pkg>/mrepo/packages/.layer.json
 $EDITOR haiccing/<pkg>/README.md
 # the check: its info test, the included packages against the list
 tools/bare haiccing/<pkg>/main.js /test/info
-# deployed as the target: its mrepo made of the list
-haicc . boot/deploy <name> <pkg>
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 

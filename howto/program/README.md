@@ -10,7 +10,9 @@ mrepo's folder, and ends it with `runtime/stop . <path>`; a hook does
 both, so the program follows the mrepo's service. A Splectral
 component's program is one: its `start` hook starts it.
 
-## Steps
+## Making it
+
+In development, where the packages are built (`howto/`, "Written where"):
 
 ```sh
 # the program: run.js, its work in a module; what runtime/start hands it
@@ -22,10 +24,11 @@ $EDITOR <org>/<pkg>/run.js
 # started and ended by the hooks of the package that defines the mrepo
 printf 'runtime/start . <path>\n' > <org>/<component>/mrepo/runtime/hooks/start.haicc
 printf 'runtime/stop . <path>\n' > <org>/<component>/mrepo/runtime/hooks/stop.haicc
-# by hand, at an mrepo, to see it
-haicc <position> runtime/start . <path>
-haicc <position> runtime/stop . <path>
 ```
+
+## Steps
+
+The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what it answers under it; run with `howto/run`, shown here at info extraction.
 
 ## Notes
 
