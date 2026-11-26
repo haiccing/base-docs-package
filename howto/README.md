@@ -23,6 +23,7 @@ implemented with no how-to naming it (`Pattern: <name>`).
 - [program](program/)
 - [platform](platform/)
 - [schemas](schemas/)
+- [types](types/)
 - [howto](howto/)
 
 ## Written where

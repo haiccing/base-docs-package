@@ -28,7 +28,10 @@ Every test has its folder here, the generic ones too: nothing runs that
 has no folder. The generic tests are the same in every package and come
 with this template (`info`, `code`, `mrepo`, `package`, `modules`,
 `info-in-situ`, `mrepo-in-situ`); a test of the package's own is named as
-the package likes (`name` here). Run through the package's dispatcher (`main.js`, its bundle's
+the package likes (`name` here); one that runs where the package is
+deployed is named `<name>-in-situ` and is in the `validate-in-situ` set,
+not the others: its validation test, what the platform runs to check
+the package where it is installed. Run through the package's dispatcher (`main.js`, its bundle's
 main), every one by path.
 
 A package's `test/README.md` lists its sets and links to each test's

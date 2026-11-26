@@ -4,9 +4,11 @@ A component: several packages deployed together as one mrepo, its main empty.
 
 Pattern: component
 
-A component brings no protocol and no code of its own: a list of the
-packages its mrepo is made of, itself last, and the runtime config of
-that mrepo. Its README lists the same packages under `## Included
+A component is standalone, deployed as an mrepo of its own: a list of
+the packages its mrepo is made of, itself last, and the runtime config
+of that mrepo. It may bring a protocol of its own, one, as any package
+(the human, 2026-11-25: "There is no restriction on what different
+types can be defined. Just not more than one protocol."). Its README lists the same packages under `## Included
 packages`, siblings, in deploy order.
 
 ## Making it

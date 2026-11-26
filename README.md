@@ -37,7 +37,8 @@ is for.
 | `modules/`, `package.json` | carries its own dependencies |
 | `mrepo/` | comes with an mrepo, by layers |
 | `scripts/` | has scripts: lists of commands, a file each (`<name>.haicc`, a simple command a line), run by name where the `haicc` command points (`haicc/file`); a deploy places them in the work folder, `<work>/scripts/<org>/<package>/`, and runs none: what an mrepo does once deployed is its `commission` hook (`mrepo/runtime/hooks/`) |
-| `schemas/` | carries schemas: AVRO, a file each (`<name>.json`), named by its URI, `<org>/<package>/<name>`, its AVRO fullname by the data-name mapping (`base-docs-uri`, "Schemas"); sealed in its bundle, registered in the install's registry when it is deployed ("Schemas") |
+| `types/` | declares core types: AVRO, a file each (`<name>.avsc`), the type's base schema, named by its URI, `<org>/<package>/<name>`, a `doc` on it and on every field; a `README.md` beside them, a line each; checked in a test of the package's own (`base-docs-avro`, "In a package"; the how-to `types`) |
+| `schemas/` | carries schemas: AVRO, a file each (`<name>.json`), named by its URI, `<org>/<package>/<name>`, its AVRO fullname by the data-name mapping; sealed in its bundle, registered in the install's registry when it is deployed (`base-docs-avro`, "In a package") |
 | `howto/` | has how-tos: what can be done with it, a folder each (`<name>/`): its README the how-to, what it does and why, and its script, `steps.haicc`, its steps as typed after `haicc` with what each answers (`# expect:`), run where it is installed (`howto/run`), shown in the page's `## Steps` at info extraction; one at the machine or in development an `sh` procedure instead, its page saying so; a pattern's how-to names it, `Pattern: <name>` (the how-to `howto`); pages of the package, read with `info` |
 | `test/` | has tests and test sets |
 | `test-reports/` | holds the proof that its tests passed: the report of its last pre-release |
@@ -62,6 +63,29 @@ is for.
 - What a person reads is what the repository will hold: expanded folders,
   carried in the package's bundle and read from it by path.
 - `modules/` is assembled, never edited by hand.
+- **Deployable on its own, tested where it runs** (the human,
+  2026-11-26: "Our package format makes each package installable. Once
+  up the resources within can be accessed, test run"; "In general, a
+  protocol package or any other should be set up such it can be deployed
+  and tested that way"): a package carries what it needs to come up as
+  an mrepo, its list (the packages it runs with, itself last) and its
+  runtime config; deployed, its resources are reached and its tests run
+  in it (`runtime/run . packages/<org>/<package>/test/<set>`; the how-to
+  `test-in-situ`, `base-package-runtime`). A rule for what is written
+  from now on: of today's packages, those with a list are deployable
+  (the components, the solution, `base-package-runtime`, `-service`,
+  `-howto`, `-splectral`); the other protocol packages are not yet, each
+  given its list as it is brought over.
+- **Validation tests that run in situ** (the human, 2026-11-26: "Each
+  package should have validation test that run 'in situ', tests the
+  platform can trigger on its own install. These can then be used to
+  validate system health"): its `validate-in-situ` set, run in the
+  running mrepo by a request; beside the two generic ones (its info, its
+  mrepo side), a test of what the package itself provides there. Safe to
+  run at any time: it leaves the install as it found it, or does only
+  what is idempotent. From package to package, as each is schema
+  enabled, not all at once (the human: "No blanket approach, from
+  package to package to limit testing surface").
 - **READMEs cascade**: a unit's README links to the README of each folder
   below it, in its menu ("READMEs"), and each of those to theirs, so from
   the top every folder is reached. The exceptions: no README inside a layer of `mrepo/` in a package
@@ -135,26 +159,8 @@ The generic `info` test checks them in every package
 
 ## Schemas
 
-A package's types, carried with it and registered where it is deployed
-(`mycelium-value-avro`).
-
-- **Where**: `schemas/<name>.json`, one AVRO schema a file, in the
-  package; a module's in its own `schemas/` (`modules/<org>/<module>/schemas/`),
-  named by the module's place (`pear-full-square/<module>/<name>`). A
-  `README.md` beside them, a line each.
-- **Its name its URI**: the file's name is the name's last part, and the
-  schema's AVRO `name` its fullname by the data-name mapping:
-  `haiccing/base-package-help/schemas/annotate-answer.json` is
-  `haiccing.basePackageHelp.annotateAnswer`.
-- **Its identity its fingerprint**: a schema never changes; a new version
-  is a new schema, a new fingerprint, kept beside the old.
-- **Registered at deploy**: placing a package registers every schema its
-  bundle carries, its own and its modules', in the install's registry:
-  the creator registers. An index, not a gatekeeper: a valid schema is
-  never refused; one that is not valid AVRO stops the deploy.
-- **Read with `info`**: `info/get schemas`, every schema an mrepo's
-  packages carry, by URI and fingerprint; a binary record is decoded by
-  `crud/read`.
+A package's types, `types/` and `schemas/`, carried with it and
+registered where it is deployed: `base-docs-avro`, "In a package".
 
 ## Modules
 
@@ -189,6 +195,13 @@ method they belong to, listed in its README under "Also exported"; a
 helper with nothing to document is a plain file. A method's README: the
 one-liner, the summary, then `Signature`, `Arguments` for an action, `Returns`,
 `Errors`, as they apply. The module's `index.js` exports its methods.
+
+What an action answers, and what it writes, follows the rule on
+structure and natural language (`base-docs-avro`, "Structure or
+language"; the human, 2026-11-26, the AI its judge): structured only
+where something acts on it exactly and can be named, said otherwise, a
+fact once. A rule for what is written from now on: today's answers are
+not yet brought to it.
 
 ## Logging and handling
 
