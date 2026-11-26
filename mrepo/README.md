@@ -231,16 +231,17 @@ A URI in a request is relative: it has no leading slash and is read from
 where its writer stands. `.` is the position itself, and so is none
 given; `./x` is `x`.
 
-- **From outside** the writer stands at `main`: `.` is `main`, `host` is
-  `main/host`. The outside reaches `main` and nothing else.
-- **The mrepo itself**, a hook or a request of its own, stands at its
-  root, above the layers, and names the layer first: `protocol/activate .
-  info`.
+- **The writer stands at `main`**, whoever it is: `.` is `main`, `host`
+  is `main/host`; another layer by its flag (`layer=runtime`). The
+  outside reaches `main` and nothing else; the mrepo's own, a hook or a
+  request of its own (`protocol/activate . info`), are written the same
+  way and are allowed any layer.
 
-Inside, in the form, a URI is an array of segments: the prefix where
-its writer stands, then the URI as written. From outside that is the
-prefix `main` and one segment: `["main", "host"]`, `["main", "."]`.
-Outside, a URI is one segment, as it is written. What an action is
+Inside, in the form, a URI is a chain of parts, kept apart so no boundary is
+parsed again: the layer first, then the local root positions gone
+through, then the URI as written, the last:
+`["main", "host"]`, `["main", "."]`, `["main", "swarms/swarm-1",
+"."]`. Outside, a URI is one, as it is written. What an action is
 about, when that is not where it is executed, is an argument: `runtime/run . packages/<org>/<package>/test/validate`.
 
 Its way: `inbox` → `request/pending/default` → `request/execute` →
