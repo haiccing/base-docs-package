@@ -18,8 +18,10 @@ mkdir -p haiccing/<pkg>/mrepo/<layer>
 echo '{ "mode": "atomic", "description": "<what it holds>" }' > haiccing/<pkg>/mrepo/<layer>/.layer.json
 # its name known: mycelium-git's LAYERS and SOLO
 $EDITOR pear-full-square/mycelium-git/lib/write.js
-# and mrepo-base-execute's TARGETS, so an action may write it
+# an atomic layer an action writes: mrepo-base-execute's TARGETS
 $EDITOR pear-full-square/mrepo-base-execute/index.js
+# a layer that stays on this machine (non-atomic): mycelium-git's isLocal
+$EDITOR pear-full-square/mycelium-git/lib/mixed.js
 # its page at run time: base-docs-package's mrepo/<layer>/, linked from mrepo/'s menu
 $EDITOR haiccing/base-docs-package/mrepo/<layer>/README.md
 # the check: every package carrying those two modules, its pre-release

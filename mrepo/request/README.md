@@ -33,15 +33,15 @@ haicc host crud/read swarms --flags log=verbose
   and that is said. After the URI of the last command the list runs to
   the end of the line, or to a `--` with the command's arguments after
   it.
-- **In the form** they are a map: `"flags": { "log": "debug" }`.
+- **In the form** they are a record, a field a flag: a boolean where
+  a flag stands alone (false when not written), a text where it takes
+  a value (`"flags": { "log": "debug", "physical": false, ... }`).
 - **A flag holds down a chain until changed**: one written at a step
   goes with each command sent on from there; one written after the last
   command's URI is that command's.
-- **A flag that is none**, or a value its flag does not take: ignored,
-  with a warning in the request's log. The rule (the human): "wrong flag
-  or issues with underlying functionality don't throw errors but
-  warnings": a flag whose target is not there is a warning too, nothing
-  thrown.
+- **A flag that is none**, or a value its flag does not take: the
+  command is not run, returned `failed`: `Not run: its flags.`, then
+  each reason (`no flag: nope (...)`).
 - The flags there are: `log`, below, `layer`, `continuation` ("A
   continuation", further down), and `container`, a routing directive:
   `boot/deploy`'s child deployed into a container, on the container's
@@ -54,7 +54,7 @@ a default, and a flag changes it: `layer=<name>` reads the command's own
 URI at another layer.
 
 ```
-haicc . crud/read "done/*[value/value/protocol='boot']" --flags layer=request
+haicc . crud/read "done/*[value/form/protocol='boot']" --flags layer=request
 haicc host crud/read done/* --flags layer=request
 ```
 
@@ -67,26 +67,30 @@ haicc host crud/read done/* --flags layer=request
 
 ## The log
 
-A request's log is in its own record, `log`: its entries, each
-`{ level, event, time, ... }`, its numbers in fields of their own (`ms`,
-counts).
+A request's log is in its processing, `processing.log`: its entries,
+each `{ time, level, event, line }`, a line of natural language. Its
+numbers are fields of their own, not entries: `processing.metrics`
+(`ms`, reads, selects, puts, removes, commits) and what it changed,
+`processing.changed`, a target each.
 
 | level | |
 |---|---|
 | `error`, `warn` | always kept: what stopped the request (`request.failed`: the error, its causes, the step it was at, what was undone); what was got over |
-| `info` | without a flag: what the request changed, a target a line (`request.changed`: the paths added, changed, removed); where it was sent on; its metrics, the closing line (`request.metrics`: `ok`, `ms`, reads, selects, puts, removes, commits); and the meaning of what its action did |
+| `info` | without a flag: the meaning of what its action did; a target's changes beyond the hundred listed, a count (`request.changed`) |
 | `verbose` | `--flags log=verbose`: the action's steps too, each with what it took and what it read and wrote |
 | `debug` | `--flags log=debug`: its internals too, and the boundary's own steps (`train.*`) |
 
 An action's entries are stored under its protocol and action:
-`crud.read.select`. The entries of a request a command was sent on to
-come back with its response, each under its `jump`: the positions gone
-through.
+`crud.read.select`. A request a command was sent on to keeps its own
+entries, in that mrepo's `request/done`: linked from here
+(`processing.sent`), not copied.
 
 ## Internal requests
 
 A request comes from the inbox, or from the mrepo itself. Either way it
-passes one handler into `pending/default`; the inbox itself checks nothing.
+passes one handler into `pending/default`. What comes from the inbox
+is checked first by the mrepo's types, strictly (the record and the
+request, its `avro` layer): one that is not refused, said.
 
 - **From the inbox**: the handler validates it: addressed to this mrepo,
   offered by its API.
@@ -103,11 +107,12 @@ passes one handler into `pending/default`; the inbox itself checks nothing.
 
 ## A continuation
 
-A command may answer, beside its output, with a script to go on with:
+A command may answer, beside what it says, with a script to go on with,
+in the request's processing:
 
 ```json
-{ "output": { "deployed": "host" },
-  "continuation": { "at": "host", "script": "service/initialise\nservice/start\n" } }
+{ "processing": { "continuation": { "at": "host", "script": "service/initialise\nservice/start\n" } },
+  "returned": { "status": "done", "message": "Deployed host as local/host.", "attachments": [] } }
 ```
 
 - **`script`**: lines, each a simple command; at most 64 KiB. **`at`**:
@@ -148,10 +153,12 @@ there, and that mrepo's response becomes the request's result.
   interpreted and checked where it lands.
 
 ```json
-{ "command": ["haicc", "host", "info/get", "haiccing"],
-  "protocol": "haicc", "action": "goto", "uri": ["main", "host"],
-  "args": ["info/get", "haiccing"],
-  "remote": { "at": "host", "folder": "../local/host", "key": "…" },
-  "output": { } }
+{ "command": "haicc host info/get haiccing",
+  "form": { "protocol": "haicc", "action": "goto", "uri": ["main", "host"], "args": ["info/get", "haiccing"] },
+  "processing": { "waiting": null, "sent": { "at": "host", "mrepo": "local/host", "offset": 1795400000002 } },
+  "returned": { "status": "done", "message": "haiccing: ...", "attachments": [] } }
 ```
+
+What the other mrepo attached comes back as it is, the wrapper carried
+on untouched: this mrepo needs nothing of its content's type.
 

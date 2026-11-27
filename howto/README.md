@@ -13,6 +13,7 @@ implemented with no how-to naming it (`Pattern: <name>`).
 - [component](component/)
 - [documentation-package](documentation-package/)
 - [app](app/)
+- [attachment](attachment/)
 - [mrepo-definition](mrepo-definition/)
 - [layer](layer/)
 - [hooks](hooks/)

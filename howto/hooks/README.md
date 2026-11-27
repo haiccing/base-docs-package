@@ -40,6 +40,10 @@ The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what i
 
 ## Notes
 
+- **A `boot` line that fails stops the runtime**: nothing taken in, why
+  written beside its repository (`runtime.failed`), its process ended,
+  exit 1; what put the mrepo in place (the boot, a deploy) fails with
+  it.
 - **Waited for**: `service/start` answers once its lines are done, so a
   command sent after it finds the door open.
 - **The mrepo's own**: each line is a request of its own, recorded,

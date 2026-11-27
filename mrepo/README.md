@@ -21,6 +21,7 @@ folder documents a layer.
 - [request](request/)
 - [execute](execute/)
 - [xpath](xpath/)
+- [avro](avro/)
 
 ## A package's part
 
@@ -67,7 +68,7 @@ Each layer has a mode, in its `.layer.json`:
 |---|---|---|
 | atomic | one commit at a time, by the runtime | `main`, `runtime`, `protocols`, `info` |
 | replicated | as atomic, also copied out as files | `packages` |
-| non-atomic | its own writers, in parallel | `inbox`, `outbox`, `request/*`, `execute/*`, `xpath/*` |
+| non-atomic | its own writers, in parallel | `inbox`, `outbox`, `request/*`, `execute/*`, `xpath/*`, `avro` |
 
 Where the layers are stored:
 
@@ -78,7 +79,7 @@ Where the layers are stored:
 | `git` | native git, on the filesystem |
 
 Request and execute layers are always on the filesystem, whatever the
-storage.
+storage; so are `xpath/*` and `avro`, this machine's own.
 
 ## The mrepo's folder
 
@@ -151,9 +152,11 @@ runtime of its own for it:
   outbox/        output: each record committed is written here too (there from the start)
   packages/      its packages, hard linked, for Bare to run
   runtime.sock   its runtime's local connection (status, stop)
+  runtime.failed why its runtime bailed out as it started (its boot hook failed); gone at its next start
 ```
 
-No other layer has a folder: it is read from the repository.
+No other layer has a folder: it is read from the repository (the `avro`
+layer among them: local, in the repository only).
 
 ## Records
 
@@ -188,41 +191,44 @@ configuration, audit, metrics, events, state.
 
 ## A request
 
-A record, as an onion: a form (the request) in an envelope (where it is
-going). Its offset, the milliseconds since the epoch when it arrived
-at the mrepo (given as it is dropped into the inbox, never two the
-same; the mrepo's own requests from the same clock), is its one
-identity there: on the form's record and its envelope, and the name of
-its document in every layer, 13 digits.
+One record around one request, each a declared type
+(`haiccing/base-package-runtime`, `types/`: `record`, `request`;
+`base-docs-avro`, "The cascade"). Its offset, the milliseconds since
+the epoch when it arrived at the mrepo (given as it is dropped into the
+inbox, never two the same; the mrepo's own requests from the same
+clock), is its one identity there: on its record, and the name of its
+document in every layer, 13 digits.
 
 ```json
 {
   "topic": "/local/boot/inbox",
-  "key": "7b0c1f4e-2d3a-4c5b-9e6f-0a1b2c3d4e5f",
+  "key": null,
+  "offset": 1794268800000,
   "timestamp": "2026-11-10T00:00:00.000Z",
   "headers": {},
   "value": {
-    "topic": "/terminal",
-    "key": "7b0c1f4e-2d3a-4c5b-9e6f-0a1b2c3d4e5f",
-    "timestamp": "2026-11-10T00:00:00.000Z",
-    "headers": {},
-    "value": { "protocol": "service", "action": "start", "uri": "." }
+    "command": "service/start",
+    "from": "terminal",
+    "to": "local/boot",
+    "reply": "/haicc/terminal",
+    "origin": null,
+    "form": null,
+    "processing": { "log": [], "metrics": null, "changed": [], "waiting": null, "sent": null, "continuation": null },
+    "returned": null
   }
 }
 ```
 
-The envelope's `topic` is where it goes; the core's, where the completed
-form goes back. Each move replaces the envelope; the core never changes.
-Processing completes the form: its `output`, or the `error` that stopped
-it.
+The record is the transport's: its `topic` is the stream it is in, and
+each move writes a new record around the same request. The request is
+self-contained: its `command`, the line as typed; who asked and where
+its answer goes; its `form`, the command as understood (`{ protocol,
+action, uri, args, flags }`), filled as it is taken in; its
+`processing`, what happened to it; what is `returned`, `done` or
+`failed`, a message in natural language, its attachments.
 
-The request itself is a form, `{ protocol, action, uri, args }`, the
-arguments a list, unnamed. It can also be given as a command, as it is
-typed: its parts in order, `<protocol>/<action> <URI> <argument>...`.
-
-```json
-"value": ["haicc", "host", "service/start"]
-```
+A command is a line as it is typed: its parts in order,
+`<protocol>/<action> <URI> <argument>...`.
 
 The mrepo interprets it on its way in. The protocol alone takes its
 default action: `haicc` is `haicc/goto`.
@@ -256,7 +262,7 @@ explicit, always. A layer that declares no structure is a folder,
 whatever its name (the human, 2026-11-24: "explicit declaration: yes.
 Otherwise it is just a folder"); the structure check fails a box or
 `request/done` that does not declare. A query reads one as its
-records: `done/*[value/value/protocol='boot']`; as it is stored only
+records: `done/*[value/form/protocol='boot']`; as it is stored only
 with `--flags physical` (`done/*/*/*`).
 Requests are checked at the inbox, and again as they execute.
 

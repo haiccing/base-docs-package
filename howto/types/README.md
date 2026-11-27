@@ -45,5 +45,6 @@ tools/bare tools/package-test.js haiccing/<pkg>
   that declares it, not in the module's own tests.
 - **In the running mrepo too**: the test in `validate-in-situ`, run with
   `runtime/run` where the package is deployed.
-- **Extracted by the warm boot**: `warm-boot/prepare` copies a placed
-  package's `types/*.avsc` into the install's types folder.
+- **Loaded by the schema registry**: `avro-registry/load` checks a
+  placed package's `types/*.avsc` as contracts and commits them into
+  its `main`; a type that is no contract fails the load.

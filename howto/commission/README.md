@@ -5,10 +5,9 @@ A package's commission and decommission: what its mrepo does once deployed, and 
 Pattern: commission
 
 Two hooks of the lifecycle, the package's: `commission.haicc`, run by
-the mrepo's runtime once, as it starts after its deploy, the deploy
-waiting for it; `decommission.haicc`, run when a teardown asks, before
-the runtime is stopped. Their lines are the mrepo's own (not held at its
-door). The deploy names no service: the package decides, typically
+the mrepo's runtime as it starts (a deploy waits for it; again at
+every start); `decommission.haicc`, run when a teardown asks, before
+the runtime is stopped. Their lines are the mrepo's own. The deploy names no service: the package decides, typically
 `service/initialise` then `service/start`. A solution's commission
 deploys its components first, each commissioned by its own (the
 cascade), then brings itself into service; its decommission tears them
@@ -21,7 +20,7 @@ In development, where the packages are built (`howto/`, "Written where"):
 ```sh
 # what its mrepo does once deployed: its components, then its service
 cat > haiccing/<pkg>/mrepo/runtime/hooks/commission.haicc <<'END'
-# commission: run once by the runtime as it starts after the deploy
+# commission: run by the runtime as it starts (a deploy; again at a restart, its lines idempotent)
 boot/deploy docs haiccing/base-component-docs
 service/initialise
 service/start
