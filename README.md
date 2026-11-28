@@ -76,6 +76,13 @@ is for.
   (the components, the solution, `base-package-runtime`, `-service`,
   `-howto`, `-splectral`); the other protocol packages are not yet, each
   given its list as it is brought over.
+- **A package's list says what it depends on** (the human, 2026-11-28:
+  "The package list give a platform user the dependencies: when
+  building a component or a solution and you need a package, then the
+  package internal list will tell you the packages it depends on"):
+  whoever builds a component or a solution with a package reads its
+  list for the packages it needs with it; a package bringing variants
+  has their type's package in it (`base-docs-vision`, "Type system").
 - **Validation tests that run in situ** (the human, 2026-11-26: "Each
   package should have validation test that run 'in situ', tests the
   platform can trigger on its own install. These can then be used to
@@ -160,8 +167,9 @@ The generic `info` test checks them in every package
 ## Schemas
 
 A package's types, `types/` (and `schemas/`, the first build's form),
-carried with it; known where it is placed through the schema registry:
-`base-docs-avro`, "In a package".
+declared once, carried with it; gathered by the schema registry from
+the install's sources (as built: from the store): `base-docs-avro`, "In
+a package" and "The registry".
 
 ## Modules
 

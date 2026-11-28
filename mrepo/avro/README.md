@@ -34,4 +34,9 @@ types, variants"):
   under every storage (`isLocal`).
 - **No folder is empty**: `registry/` and `variants/` come with what
   fills them.
+- **The mrepo's internal use** (the human, 2026-11-28: "the avro layer
+  is for mrepo internal use. The cached data gets checkpointed, other
+  data (like variants) is committed"): types cached from the registry
+  checkpointed, variants committed. The rules for checkpointing and
+  committing are a later piece of work, once the functionality runs.
 - **The design**: `base-docs-vision`, "Type system" and "Solutions".

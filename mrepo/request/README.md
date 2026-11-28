@@ -23,7 +23,7 @@ flags of that step. A flag stands alone, or carries a value,
 `key=value`, no space.
 
 ```
-haicc host --flags log=debug -- haicc node-1 crud/read swarms
+haicc host --flags log=debug -- haicc peer-1 crud/read swarms
 haicc host crud/read swarms --flags log=verbose
 ```
 
@@ -139,8 +139,8 @@ there, and that mrepo's response becomes the request's result.
 - **Sent on**: the hop takes its own `haicc <URI>` off, and the rest is
   delivered as it is to the other mrepo's inbox. Where the URI runs on
   through the shortcut, what is left of it goes in front, a `haicc`
-  there. On the same node that is direct: a file dropped into its
-  inbox folder. Another node needs dispatch, which is not built.
+  there. On the same peer that is direct: a file dropped into its
+  inbox folder. Another peer needs dispatch, which is not built.
 - **Waiting**: the request's processing ends there. Its principal, on
   its own branch, now says which child it waits for. The mrepo goes on
   with its other requests.

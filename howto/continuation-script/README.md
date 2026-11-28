@@ -18,9 +18,9 @@ In development, where the packages are built (`howto/`, "Written where"):
 ```sh
 # the script: commands for where it will be run, from that place
 cat > haiccing/<pkg>/scripts/cluster.haicc <<'END'
-# cluster: a swarm and its nodes
+# cluster: a swarm and its peers
 crud/create swarms/swarm-1 '{"kind":"swarm"}'
-boot/deploy swarms/swarm-1/node-1 haiccing/base-component-haicc
+boot/deploy swarms/swarm-1/peer-1 haiccing/base-component-haicc
 END
 # its README: scripts/, each script with what it does
 $EDITOR haiccing/<pkg>/scripts/README.md

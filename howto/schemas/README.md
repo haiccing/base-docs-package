@@ -1,38 +1,31 @@
 # schemas
 
-A package's schemas: AVRO, a file each in schemas/, named by its URI, registered when it is deployed.
+The first build's schemas: AVRO, a file each in schemas/, retiring as packages are brought to types/.
 
 Pattern: schemas
 
-A schema is a type a package's data has where it is written in binary:
-a record in a topic, an answer streamed to a viewer. The package carries
-it in `schemas/<name>.json`, its AVRO name the fullname of its URI.
-Deploying the package registers it in the install's registry, by
-fingerprint and by URI; a binary record names its schema by fingerprint,
-and is read by whoever has the registry, as written or as the reader
-needs (is-like).
+The first build's form: a schema a file, `schemas/<name>.json`, its
+AVRO name the fullname of its URI, a module's in its own `schemas/`.
+Nothing registers or lists them any more: registration at deploy was
+removed with the request's new structure, and the info layer's
+`schemas` page is retired. Still carried by the packages not yet
+brought over. A package brought to schemas declares `types/` instead
+(the how-to `types`), its types gathered by the schema registry.
 
 ## Steps
 
-The steps, as typed after `haicc`, are `steps.haicc` beside this page:
+**In development**: these steps act on the packages where they are built, not inside an install: an `sh` procedure, no `steps.haicc`; their check is the pre-release.
 
 ```sh
-# the schema: its AVRO name the fullname of <org>/<package>/<name>
-cat > haiccing/<pkg>/schemas/<name>.json <<'END'
-{ "type": "record", "name": "haiccing.<pkgCamel>.<NameCamel>", "fields": [ ... ] }
-END
-# its README: schemas/, each schema with what it is
-$EDITOR haiccing/<pkg>/schemas/README.md
-# deployed: registered; every schema an mrepo's packages carry, by URI and fingerprint
-haicc host info/get schemas
-# a binary record decoded, every level, by the install's registry
-haicc host crud/read <layer path>.avro --flags layer=<layer>
+# a package still in the first form: its schemas, a file each
+ls haiccing/<pkg>/schemas
+# brought over: its types declared instead (the how-to types), schemas/ removed
+$EDITOR haiccing/<pkg>/types/<name>.avsc
+tools/bare tools/package-test.js haiccing/<pkg>
 ```
 
 ## Notes
 
-- **A new version is a new schema**: change it and its fingerprint
-  changes; records written with the old one still name it, and still
-  read.
-- **Where nothing is typed yet**, the `json` type
-  (`pear-full-square/mycelium-value-avro/json`) carries the value.
+- **Where nothing is typed yet**, the first build's `json` type
+  (`pear-full-square/mycelium-value-avro/json`) carries the value; not
+  used by what is brought to the request.

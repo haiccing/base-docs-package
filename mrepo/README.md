@@ -97,46 +97,46 @@ A running mrepo sees only forward
 folder's package store, named in its packages manifest).
 
 Every mrepo has a unique URI in its runtime layer, a path: its namespace,
-then its name (`<swarm>/<node>`). What the boot mrepo creates is
+then its name (`<swarm>/<peer>`). What the boot mrepo creates is
 `local/<name>`: the boot mrepo is `local/boot`, the host `local/host`.
 Its inbox is addressed by it: `/local/host/inbox`. An mrepo deployed
 below `main` is in its parent's namespace, unless a node above it says
 it is a namespace (its kind), the nearest:
 
-- **A swarm**, `{"kind":"swarm"}`: its name the namespace. A swarm's node
+- **A swarm**, `{"kind":"swarm"}`: its name the namespace. A swarm's peer
   is deployed at `swarms/<swarm>/<name>`, below its swarm's node:
-  `swarm-1/node-1`, placed at `<work>/mrepos/swarm-1/node-1/`.
+  `swarm-1/peer-1`, placed at `<work>/mrepos/swarm-1/peer-1/`.
 - **A `howtos` node**, `{"kind":"howtos"}`: the root of a namespace, the
   path below it the unique URI; a how-to's key, `<org>/<package>/howto/<name>`,
   then its mrepo's name: `howtos/haiccing/base-package-crud/howto/query/boot`
   is `haiccing/base-package-crud/howto/query/boot`, placed at
   `<work>/mrepos/haiccing/base-package-crud/howto/query/boot/`.
   What that mrepo deploys is in its namespace, beside it
-  (`.../howto/query/host`), a swarm's nodes too.
+  (`.../howto/query/host`), a swarm's peers too.
 
 **The rule**: a unique URI is never a prefix of another's (`swarm-1` is a
-prefix of `swarm-1/node-1`, and no mrepo): no mrepo's folder inside
+prefix of `swarm-1/peer-1`, and no mrepo): no mrepo's folder inside
 another's. A deploy that would break it is refused, nothing built.
 
-A swarm's node can have a replica in a container, made by the
+A swarm's peer can have a replica in a container, made by the
 `container` protocol (`base-package-container`): a second mrepo, its
-unique URI the node's with `container` behind it
-(`swarm-1/node-1/container`), its folder beside the mrepos:
+unique URI the peer's with `container` behind it
+(`swarm-1/peer-1/container`), its folder beside the mrepos:
 `<work>/containers/<unique URI>/`, the one folder its container can
-write. The node on the host, the bridgehead, links it at the position
+write. The peer on the host, the bridgehead, links it at the position
 `container` and reaches it through its inbox and outbox folders, as any
 linked mrepo.
 
-A node can instead run in a container on its own haicc install, a pair
+A peer can instead run in a container on its own haicc install, a pair
 (`boot/deploy <position> <package> --flags container`, `mrepo-base-boot`).
 The container's haicc home is a folder of the host's,
 `<work>/containers/<unique URI>/`, mounted into it, the host's sources
 read only at their own paths; it boots itself, and its own boot mrepo
-deploys the node at the same position, by the same unique URI. The host
-keeps a link (`how: container`) to the node's folder inside it and no
+deploys the peer at the same position, by the same unique URI. The host
+keeps a link (`how: container`) to the peer's folder inside it and no
 runtime of its own for it:
 
-- **Commands for the node** go as to any linked mrepo: a file in its
+- **Commands for the peer** go as to any linked mrepo: a file in its
   inbox folder, the answer from its outbox folder.
 - **Platform commands on it** (its deploy, teardown, redeploy) go to the
   container's boot mrepo, through its inbox, and are executed there.

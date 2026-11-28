@@ -56,5 +56,5 @@ A document by the link's own key:
 
 ## Not yet
 
-A link to an mrepo that was not deployed here; a swarm's nodes in
+A link to an mrepo that was not deployed here; a swarm's peers in
 containers.

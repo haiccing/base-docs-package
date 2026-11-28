@@ -34,7 +34,7 @@ The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what i
 ## Notes
 
 - **The form**, a line a command: `# step: <title>` opens a step; a
-  line its position first (`.`, `host`, `host/node-1`), then the
+  line its position first (`.`, `host`, `host/peer-1`), then the
   command; `# expect: <fragment>` under it, in its answer (its output
   as `haicc --output` prints it, or `error: <message>`); `# scene:
   <title>`, once, before the steps; `# needs: docker` (or `network`),
