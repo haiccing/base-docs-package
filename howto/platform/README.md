@@ -7,7 +7,7 @@ Pattern: platform
 The platform links the boot protocol and offers a protocol of its own.
 A component is an mrepo it deploys in two halves, a dual install:
 haicc's, a plain service-managed mrepo; then the platform's, the
-component's own list laid on top. Splectral is the first.
+component's own list laid on top. SPLectral is the first.
 
 ## The two halves
 

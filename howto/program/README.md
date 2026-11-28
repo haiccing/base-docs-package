@@ -7,7 +7,7 @@ Pattern: program
 A package with a `run.js` is a program. An mrepo starts one beside
 itself with `runtime/start . <path>`, the package by its path in the
 mrepo's folder, and ends it with `runtime/stop . <path>`; a hook does
-both, so the program follows the mrepo's service. A Splectral
+both, so the program follows the mrepo's service. A SPLectral
 component's program is one: its `start` hook starts it.
 
 ## Making it

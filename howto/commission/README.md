@@ -52,5 +52,5 @@ The script, [steps.haicc](steps.haicc): each line as typed after `haicc`, what i
   `service/initialise`; a component's own commission brings it into
   service before the deploy of it answers.
 - **No commission**: a package deployed as a base to lay another on
-  (`base-package-service`, under a Splectral component): what lays on
+  (`base-package-service`, under a SPLectral component): what lays on
   it brings it into service.

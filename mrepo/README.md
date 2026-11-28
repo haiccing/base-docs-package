@@ -161,7 +161,8 @@ layer among them: local, in the repository only).
 ## Records
 
 Scope: the data the platform produces and keeps as records:
-configuration, audit, metrics, events, state.
+configuration, audit, metrics, data change records, state
+(`base-docs-vision`, "Mycelium").
 
 - **Two levels, side by side in a repository.** Records in topics are
   the lower level. Objects (`.md`, `.js`, a JSON document, any git
